@@ -1,0 +1,68 @@
+clase  pública Cerradura {
+	privado  estático  final  int  N  =  10 ;
+	privado  volátil  estático  int numeros [] =  new  int [ N ]; // inicializa a 0
+	privado  volátil  estático  booleano eligiendoNum [] =  nuevo  booleano [ N ]; // inicializa a falso
+
+	 Tema público estático  crearHilo ( final int i ) {   
+		Hilo th1 =  nuevo  Hilo ( nuevo  Runnable () {
+
+			@Anular
+			public  void  run () {
+				
+				// calcular el numero de turno
+				eligiendoNum [i] =  verdadero ;
+				numeros [i] =  1  + maximo (numeros);
+				eligiendoNum [i] =  falso ;
+				
+				// comparar el turno con todos los hilos
+				para ( int j = 0 ; j < N ; j ++ ) {
+					while (eligiendoNum [j]); // se espera a que haya elegido
+					
+					while ((numeros [j] ! =  0 ) && ((numeros [j] < numeros [i]) || ((numeros [j] == numeros [i]) && (j < i))));
+					/ * Se espera si:
+					 * -el numero es mayor que el nuestro (i)
+					 * -el numero es igual a nuestro pero nuestro indice (i) es mayor
+					 * * la primera parte es para evitarle consultar todo esto si ya es igual a 0
+					 * /
+				} // aleta para
+					// SECCIÓN CRÍTICA
+					Sistema . a cabo . println ( " ( "  + i +  " ) Hola! " );
+					Sistema . a cabo . println ( " ( "  + i +  " ) que bonito! " );
+					Sistema . a cabo . println ( " ( "  + i +  " ) alucinante " );
+					
+					// SECCIÓN NO CRÍTICA
+					numeros [i] = 0 ;
+					Sistema . a cabo . println ( " ( "  + i +  " ) paseando voy ... " );
+					Sistema . a cabo . println ( " ( "  + i +  " ) paseando vengo ... " );
+
+					
+			}
+		}, " Hilo " + i);
+		devuelve th1;
+	}
+	// Hilo de aleta
+	
+	public  static  int  maximo ( int [] numeros ) { // Calcular maximo
+		int maxi =  0 ;
+		for ( int i = 0 ; i < numeros . length; i ++ ) {
+			maxi + = numeros [i];
+		}
+		volver maxi;
+		
+	}
+	
+	public  static  void  main ( String [] args ) {
+		List < Thread > lista =  new  ArrayList < Thread > (); // lista es una interfaz mas generica que la clase ArrayList
+		para ( int i = 0 ; i < N ; i ++ ) {
+			Tema th = crearHilo (i);
+			lista . agregar (th);
+		}
+		
+		para ( int i = 0 ; i < N ; i ++ ) {
+			Tema th = lista . Consigo);
+			th . comienzo();
+			
+		}
+		
+
+	}
